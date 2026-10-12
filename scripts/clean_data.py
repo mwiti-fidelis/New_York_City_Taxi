@@ -27,9 +27,16 @@ dropped_columns = columns + ["dropped_reason"]
 
 
 
-with open(dropped_output, 'w', newline='', encoding='utf-8') as dropped_file:
-    writer = csv.DictWriter(dropped_file, fieldnames=dropped_columns)
-    writer.writeheader()
+with open(dropped_output, 'w', newline='', encoding='utf-8') as dropped_file, \
+    open(cleaned_output, 'w', newline='', encoding='utf-8') as cleaned_file:
+
+
+
+    dropped_writer = csv.DictWriter(dropped_file, fieldnames=dropped_columns)
+    dropped_writer.writeheader()
+
+    cleaned_writer = csv.DictWriter(cleaned_file, fieldnames=cleaned_columns)
+    cleaned_writer.writeheader()
 
     with open(input_file, 'r', newline='', encoding='utf-8') as file:
         reader = csv.DictReader(file)
@@ -37,7 +44,7 @@ with open(dropped_output, 'w', newline='', encoding='utf-8') as dropped_file:
         for row in reader:
             dropped_reasons = []
 
-            total_amount = float(row["total_amount"])
+            total_amount = float(row["total_amount"] or 0)
             if total_amount <= 0:
                 dropped_reasons.append("total_amount <= 0")
 
@@ -77,8 +84,19 @@ with open(dropped_output, 'w', newline='', encoding='utf-8') as dropped_file:
             if dropped_reasons:
                 dropped_row = {column: row[column] for column in columns}
                 dropped_row["dropped_reason"] = "; ".join(dropped_reasons)
-                writer.writerow(dropped_row)
+                dropped_writer.writerow(dropped_row)
+            else:
+                trip_duration = (dropoff - pickup).total_seconds() /60
+                trip_speed = distance / (trip_duration / 60)
 
-with open(cleaned_output, 'w', newline='', encoding='utf-8') as cleaned_file:
-    writer = csv.DictWriter(cleaned_file, fieldnames=cleaned_columns)
-    writer.writeheader()
+                if float(row["fare_amount"]) > 0:
+                    tip_percentage = (float(row["tip_amount"]) / float(row["fare_amount"])) * 100
+                else:
+                    tip_percentage = None
+                
+                cleaned_row = {column: row[column] for column in columns}
+                cleaned_row["trip_duration"] = trip_duration
+                cleaned_row["trip_speed"] = trip_speed
+                cleaned_row["tip_percentage"] = tip_percentage
+
+                cleaned_writer.writerow(cleaned_row)
