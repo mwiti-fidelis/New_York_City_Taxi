@@ -2,6 +2,7 @@ import sqlite3
 import polars as pl
 import os
 
+
 DATABASE = "NYC_taxi.db"
 TRIPS_DATA = "../data/cleaned_data.csv"
 ZONES = "../data/taxi_zone_lookup.csv" 
