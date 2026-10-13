@@ -1,0 +1,80 @@
+.data-grid .minidata-container{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 30px; 
+}
+.data-grid .mini-grid{
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    width: auto;
+    height: 150px;
+    color: #8A8A8A;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.data-grid .mini-grid .mindata-p{
+    margin: 0;
+}
+.data-grid .minidata-data{
+    color: #ffff;
+    font-weight: bold;
+    font-size: 22px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+
+/* Data Charts */
+.data-grid .data-charts-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+    margin-top: 50px;
+    height: 400px;
+    margin-bottom: 100px;
+}
+.data-grid .trip-by-hour-container, .data-grid .pickup-zones-data-cotainer{
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    color: #8A8A8A;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    column-gap: 5px;
+}
+.data-grid .container-info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+.data-grid .container-info-title{
+    color:rgb(0, 132, 255);
+    font-weight: bold;
+    font-size: 26px;
+    margin-bottom: 1px;
+}
+
+
+/* Distance Fare Comparison */
+.data-grid .distance-fare-comparison-container{
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    color: #8A8A8A;
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    column-gap: 5px;
+    padding: 10px;
+    height: 450px;
+    margin-bottom: 100px;
+}
+

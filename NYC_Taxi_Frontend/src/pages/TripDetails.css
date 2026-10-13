@@ -1,0 +1,42 @@
+.data-grid .trip-details-container{
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    color: #8A8A8A;
+    height: 450px;
+}
+
+.data-grid .trip-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 10px;
+    padding-left: 30px;
+}
+
+.data-grid .trip-details .container-info-title{
+    margin-bottom: 30px;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 22px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+th {
+    color: #ffff;
+    font-weight: 600;
+    text-align: left;
+    padding: 15px 30px;
+    user-select: none;
+}
+td{
+    padding: 15px 30px;
+}
+tbody tr:hover {
+    background-color: #444444;
+    transition: background-color 0.2s ease-in-out;
+}
