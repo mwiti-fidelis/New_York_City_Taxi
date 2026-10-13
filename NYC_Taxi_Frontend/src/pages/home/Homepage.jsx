@@ -1,7 +1,7 @@
 import { TripDetails } from './TripDetails';
 import { ToolBar } from './ToolBar';
 import './HomePage.css';
-import { DataVisualization } from './DataVisualization';
+import { DataVisualization } from '../data-management/DataVisualization';
 
 export function HomePage() {
     return (
