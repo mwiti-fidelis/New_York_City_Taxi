@@ -11,3 +11,8 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
+scripts/NYC_taxi.db
+scripts/NYC_taxi_before_rebuild.db
+data/*_backup.csv
+node_modules/
+dist/
