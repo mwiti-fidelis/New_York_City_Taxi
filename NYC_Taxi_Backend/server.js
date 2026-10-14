@@ -68,14 +68,15 @@ app.get('/api/dashboard', (req, res) => {
         
         const distanceFare = db.prepare(`
             SELECT
-                CAST(trip_distance AS REAL) AS distance,
-                CAST(fare_amount AS REAL) AS fare
+                CAST((ROUND(trip_distance / 10.0, 0) * 10) AS INTEGER) AS distance,
+                ROUND(AVG(fare_amount), 2) AS fare
             FROM trips
             WHERE tpep_pickup_datetime >= ? AND tpep_pickup_datetime <= ?
                 AND trip_distance > 0.5
                 AND fare_amount > 2.5
-            ORDER BY trip_distance
-            LIMIT 500
+            GROUP BY CAST((ROUND(trip_distance / 10.0, 0) * 10) AS INTEGER)
+            ORDER BY distance
+            LIMIT 20
         `).all(startOfDay,  endOfDay)
         
         return res.json({
@@ -115,13 +116,14 @@ app.get('/api/dashboard', (req, res) => {
 
     const distanceFare = db.prepare(`
         SELECT
-            CAST(trip_distance AS REAL) AS distance,
-            CAST(fare_amount AS REAL) AS fare
+            CAST((ROUND(trip_distance / 10.0, 0) * 10) AS INTEGER) AS distance,
+            ROUND(AVG(fare_amount), 2) AS fare
         FROM trips
         WHERE trip_distance > 0.5
             AND fare_amount > 2.5
-        ORDER BY trip_distance
-        LIMIT 500
+        GROUP BY CAST((ROUND(trip_distance / 10.0, 0) * 10) AS INTEGER)
+        ORDER BY distance
+        LIMIT 20
     `).all()
 
 
@@ -136,6 +138,50 @@ app.get('/api/dashboard', (req, res) => {
         topPickUpZones: topPickUpZones,
         distanceFare: distanceFare
     })
+})
+
+app.get('/api/trips', (req, res) => {
+    const day = req.query.day
+    const limit = Number(req.query.limit) || 20
+    const safeLimit = Math.min(Math.max(limit, 1), 100)
+
+    let whereClause = ''
+    let params = [safeLimit]
+
+    if (day) {
+        const validDay = /^2019-01-(0[1-9]|[12][0-9]|3[01])$/.test(day)
+        if (!validDay) {
+            return res.status(400).json({
+                error: 'Invalid day'
+            })
+        }
+
+        const startOfDay = `${day} 00:00:00`
+        const endOfDay = `${day} 23:59:59`
+
+        whereClause = 'WHERE tpep_pickup_datetime BETWEEN ? AND ?'
+        params = [startOfDay, endOfDay, safeLimit]
+    }
+
+    const query = `
+        SELECT
+            t.tpep_pickup_datetime AS pickupTime,
+            t.trip_distance AS distance,
+            pickup.zone AS pickupZone,
+            dropoff.zone AS dropoffZone,
+            t.fare_amount AS fare,
+            t.tip_amount AS tip
+        FROM trips AS t
+        LEFT JOIN taxi_zones pickup ON t.PULocationID = pickup.location_id
+        LEFT JOIN taxi_zones dropoff ON t.DOLocationID = dropoff.location_id
+        ${whereClause}
+        ORDER BY t.tpep_pickup_datetime DESC
+        LIMIT ?
+    `
+
+    const rows = db.prepare(query).all(...params)
+
+    res.json({ trips: rows })
 })
 
 app.listen(port, () => {
