@@ -1,0 +1,11 @@
+.distance-fare-chart {
+    width: 100%;
+    min-width: 0;
+    color: #8A8A8A;
+}
+
+.distance-fare-chart-note {
+    font-size: 12px;
+    margin: 4px 0 0;
+    text-align: center;
+}

@@ -1,5 +1,5 @@
 import './DataVisualization.css';
-
+import DistanceFareChart from './DistanceFareChart';
 export function DataVisualization() {
     return (
         <>
@@ -55,7 +55,9 @@ export function DataVisualization() {
                     <p className="container-info-title">Distance Vs Fare</p>
                     <p>Fare rises with the distance, with a few outliers</p>
                 </div>
-                <div className="distance-vs-fare-scatter-plot"></div>
+                <div className="distance-vs-fare-scatter-plot">
+                    <DistanceFareChart />
+                </div>
                 <div className="grid-footer">Scatter plot: Trip distances Vs Fare amount</div>
             </div>
         </>
