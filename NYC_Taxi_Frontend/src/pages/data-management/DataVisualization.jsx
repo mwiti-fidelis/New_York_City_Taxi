@@ -1,6 +1,14 @@
+import { useState } from 'react';
 import './DataVisualization.css';
+import { DataFetcher } from '../../components/TripsDataFetcher';
 
 export function DataVisualization() {
+    const [showChart, setShowChart ] = useState();
+
+    const handleClick = () => {
+        setShowChart(true);
+    }
+
     return (
         <>
             <div className="minidata-container">
@@ -32,7 +40,11 @@ export function DataVisualization() {
                         <p className="container-info-title">Trips by Hour of Day</p>
                         <p>Evening rush is the busiest period</p>
                     </div>
-                    <div className="trip-by-hour-bar-chart"></div>
+                    {/* if showChart is false, display the button otherwise show the TripBarChart */}
+                    {!showChart && (
+                        <button className='display-data-btn' onClick={handleClick}>Display Data</button>
+                    )}
+                    {showChart && <DataFetcher />}
                     <div className="grid-footer">
                         Bar Chart: trips per hour (0 to 23)
                     </div>

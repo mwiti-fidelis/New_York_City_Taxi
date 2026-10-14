@@ -45,9 +45,11 @@
     background-color: #1E1E1E;
     border-radius: 10px;
     color: #8A8A8A;
+    height: 500px;
     display: grid;
     grid-template-columns: 350px 1fr;
     column-gap: 5px;
+    margin-bottom: 100px;
 }
 .data-grid .container-info{
     display: flex;
@@ -64,6 +66,20 @@
     margin-bottom: 1px;
 }
 
+.data-grid .display-data-btn{
+    color: rgb(18, 18, 18);
+    background-color: rgb(247, 202, 3);
+    height: 40px;
+    border-radius: 8px;
+    text-align: center;
+    width: 250px;
+    margin: auto;
+    border: none;
+    transform: opacity 0.8s ease-in-out;
+}
+.display-data-btn:hover{
+    transform: opacity 0.05s;
+}
 
 /* Distance Fare Comparison */
 .data-grid .distance-fare-comparison-container{
