@@ -1,2 +1,13 @@
 /data/yellow_tripdata_2019-01.csv
 /data/cleaned_data.csv
+node_modules/
+dist/
+build/
+.env
+*.log
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
