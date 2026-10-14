@@ -1,39 +1,31 @@
 import { useState } from 'react';
 import './DataVisualization.css';
-import { DataFetcher } from '../../components/TripsDataFetcher';
+import { DisplayMiniData } from '../../components/DisplayMiniData';
+import { TripsDataFetcher } from '../../components/TripsDataFetcher';
+import { ZonesDataFetcher } from '../../components/ZonesDataFetcher';
 import DistanceFareChart from './DistanceFareChart';
-export function DataVisualization() {
-    const [showChart, setShowChart ] = useState();
+import { useFetchData } from '../../hooks/useFetchData';
+import { LoadingSpinner } from '../../components/LoadingSpinner';
+import { ErrorMessage } from '../../components/ErrorMessage'
 
-    const handleClick = () => {
-        setShowChart(true);
-    }
+
+export function DataVisualization() {
+    const { data, error, loading } = useFetchData("http://localhost:3000/api/dashboard");
+    const [ showTripChart, setShowTripChart ] = useState();
+    const [ showZoneChart, setShowZoneChart ] = useState();
+
+    
+    if(loading)return <LoadingSpinner />
+    if(error) return <ErrorMessage message={error}/>
+    if(!data) return null;
+
 
     return (
         <>
-            <div className="minidata-container">
-                <div className="mini-grid">
-                    <p className="minidata-p">Total trips</p>
-                    <p className="minidata-data">1000</p>
-                    <p className="minidata-p">Jan 2019</p>
-                </div>
-                <div className="mini-grid">
-                    <p className="minidata-p">Avg Fare</p>
-                    <p className="minidata-data">$14.20</p>
-                    <p className="minidata-p">Per trip</p>
-                </div>
-                <div className="mini-grid">
-                    <p className="minidata-p">Avg Distance</p>
-                    <p className="minidata-data">3.1 mi</p>
-                    <p className="minidata-p">Per trip</p>
-                </div>
-                <div className="mini-grid">
-                    <p className="minidata-p">Avg tip</p>
-                    <p className="minidata-data">$2.80</p>
-                    <p className="minidata-p">Per trip</p>
-                </div>
-            </div>
+            {/* Mini Data Display */}
+            <DisplayMiniData summary={data.summary} />
 
+{/* Trips by hour bar chart */}
             <div className="data-charts-container">
                 <div className="trip-by-hour-container">
                     <div className="container-info">
@@ -41,21 +33,24 @@ export function DataVisualization() {
                         <p>Evening rush is the busiest period</p>
                     </div>
                     {/* if showChart is false, display the button otherwise show the TripBarChart */}
-                    {!showChart && (
-                        <button className='display-data-btn' onClick={handleClick}>Display Data</button>
+                    {!showTripChart && (
+                        <button className='display-data-btn' onClick={()=>setShowTripChart(true)}>Display trips</button>
                     )}
-                    {showChart && <DataFetcher />}
+                    {showTripChart && <TripsDataFetcher tripsData={data.trips} />}
                     <div className="grid-footer">
                         Bar Chart: trips per hour (0 to 23)
                     </div>
                 </div>
-
+{/* Top Zones bar chart */}
                 <div className="pickup-zones-data-cotainer">
                     <div className="container-info">
                         <div className="container-info-title">Busiest Pickup Zones</div>
                         <p>Midtown and the airports lead pickups</p>
                     </div>
-                    <div className="pickup-zone-bar-chart"></div>
+                    {!showZoneChart && (
+                        <button className='display-data-btn' onClick={()=>setShowZoneChart(true)}>Display Zones</button>
+                    )}
+                    {showZoneChart && <ZonesDataFetcher zonesData={data.zones} />}
                     <div className="grid-footer">
                         Ranked bar chart: top 10 pickup zones
                     </div>
