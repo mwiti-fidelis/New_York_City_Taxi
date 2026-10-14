@@ -36,7 +36,7 @@ TABLES_SQL =  """
         total_amount REAL NOT NULL,
         trip_duration REAL NOT NULL, 
         trip_speed REAL NOT NULL,
-        tip_percentage INTEGER NOT NULL, 
+        tip_percentage REAL, 
 
         FOREIGN KEY (PULocationID) REFERENCES taxi_zones(location_id),
         FOREIGN KEY (DOLocationID) REFERENCES taxi_zones(location_id)
@@ -107,6 +107,6 @@ if __name__ == '__main__':
     database_connection = initialize_database()
     insert_zones(database_connection)
     insert_trips(database_connection)
-    database_connection.close
+    database_connection.close()
     print("Database setup complete!")
     
