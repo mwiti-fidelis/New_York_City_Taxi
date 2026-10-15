@@ -1,5 +1,6 @@
 /data/yellow_tripdata_2019-01.csv
 /data/cleaned_data.csv
+/data/NYC_taxi.db
 node_modules/
 dist/
 build/
