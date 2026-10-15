@@ -30,9 +30,6 @@ The backend expects the database at the following exact path:
 data/NYC_taxi.db
 ```
 
-### Assignment graders
-
-For assignment grading, the database file is already included in the `.zip` submission uploaded to Canvas. After extracting the zip file, confirm that `data/NYC_taxi.db` exists before starting the backend.
 
 ## Installation
 
