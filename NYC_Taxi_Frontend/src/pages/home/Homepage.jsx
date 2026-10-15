@@ -17,7 +17,7 @@ const defaultDashboard = {
 }
 
 export function HomePage() {
-    const [selectedDay, setSelectedDay] = useState('')
+    const [selectedDay, setSelectedDay] = useState('2019-01-01')
     const [dashboardData, setDashboardData] = useState(defaultDashboard)
     const [trips, setTrips] = useState([])
     const [loading, setLoading] = useState(false)
@@ -76,7 +76,7 @@ export function HomePage() {
     }
 
     useEffect(() => {
-        loadDashboard()
+        loadDashboard('2019-01-01')
     }, [])
 
     const handleApply = () => {
@@ -85,7 +85,7 @@ export function HomePage() {
 
     const handleReset = () => {
         setSelectedDay('')
-        loadDashboard()
+        loadDashboard('2019-01-01')
     }
     return (
             <div className="home-page">
