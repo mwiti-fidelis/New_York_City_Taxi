@@ -77,11 +77,20 @@ http://localhost:5173
 
 **The main way to interact with this project is through the frontend interface. Open the frontend link in your browser and use the dashboard there.** Keep both terminals running while using the dashboard.
 
+### Using the Date Filter
+
+After opening the frontend link in your browser, use the date picker in the top-left filter bar to choose a date from January 2019. Click the yellow **Apply** button to apply the selected date and display the dashboard information for that day. The charts, summary values, and trip details will update to reflect the chosen date. Click **Reset** to return to the default view.
+
 ## Video Walkthrough
 
 Watch our video walkthrough for a demonstration of the application:
 
 [Open the NYC Taxi Dashboard video walkthrough](https://drive.google.com/file/d/1YGR406EYsoTBshru3mQkyN5o-_slsIIm/view?usp=sharing)
+
+## Project Documentation
+
+- [Team Task Sheet](https://docs.google.com/spreadsheets/d/1wmRXucV6mhsSXxdEM9WZzYhkialz3_UPRqjAS5u9DqM/edit?gid=0#gid=0)
+- [PDF Documentation Report](https://drive.google.com/file/d/1JzDX3drWOE4eQNcoKj_G0cg8sXV2DYmh/view)
 
 ## Available Commands
 
