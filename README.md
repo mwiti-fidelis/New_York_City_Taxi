@@ -18,6 +18,10 @@ New_York_City_Taxi/
 - npm
 - The SQLite database file: `data/NYC_taxi.db`
 
+## Download the Codebase
+
+Download the project codebase from [Google Drive](https://drive.google.com/file/d/1thNVwYlyM1V07z5Y88fXTMoucyLl48ng/view?usp=sharing), extract the downloaded archive, and open a terminal in the extracted project folder before following the installation and running instructions below.
+
 ## Database Setup
 
 The backend expects the database at the following exact path:
@@ -25,10 +29,6 @@ The backend expects the database at the following exact path:
 ```text
 data/NYC_taxi.db
 ```
-
-### Cloning the repository
-
-If you use `git clone`, download the database file separately and place it inside the repository's `data` folder. The backend will not start without this file.
 
 ### Assignment graders
 
