@@ -1,5 +1,4 @@
-﻿import { useEffect, useState } from 'react';
-import {
+﻿import {
     ResponsiveContainer,
     ScatterChart,
     Scatter,
@@ -10,33 +9,16 @@ import {
 } from 'recharts';
 import './DistanceFareChart.css';
 
-export default function DistanceFareChart() {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState('');
-
-    useEffect(() => {
-        fetch('/distance_fare_sample.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to load data');
-                }
-                return response.json();
-            })
-            .then(setData)
-            .catch(() => setError('Could not load trip data.'));
-    }, []);
+export default function DistanceFareChart({ data = [] }) {
 
     return (
         <div className="distance-fare-chart">
-            {error ? (
-                <p>{error}</p>
-            ) : (
-                <ResponsiveContainer width="100%" height={340}>
+            <ResponsiveContainer width="100%" height={340}>
                     <ScatterChart margin={{ top: 10, right: 20, bottom: 20, left: 10 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#444" />
                         <XAxis
                             type="number"
-                            dataKey="trip_distance"
+                            dataKey="distance"
                             name="Distance"
                             unit=" mi"
                             domain={[0, 40]}
@@ -50,7 +32,7 @@ export default function DistanceFareChart() {
                         />
                         <YAxis
                             type="number"
-                            dataKey="fare_amount"
+                            dataKey="fare"
                             name="Fare"
                             unit="$"
                             domain={[0, 200]}
@@ -72,8 +54,8 @@ export default function DistanceFareChart() {
                         />
                     </ScatterChart>
                 </ResponsiveContainer>
-            )}
-            <p className="distance-fare-chart-note">
+                
+                <p className="distance-fare-chart-note">
                 {data.length} sampled trips
             </p>
         </div>

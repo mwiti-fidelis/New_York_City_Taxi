@@ -1,16 +1,25 @@
 import './ToolBar.css';
 
-export function ToolBar() {
+export function ToolBar({
+    selectedDay,
+    onDayChange,
+    onApply,
+    onReset,
+    loading
+}) {
     return (
         <div className="tool-bar-container">
             <div className="filters">
                 <div className="sort-bar">
-                    <select className="filter-by-tool" name="date-sort">
-                        <option value="Date Range">Date Range</option>
-                        <option value="Date Range">Date Range</option>
-                        <option value="Date Range">Date Range</option>
-                        <option value="Date Range">Date Range</option>
-                    </select>
+                    <input
+                        className="filter-by-tool"
+                        type="date"
+                        name="date"
+                        value={selectedDay}
+                        onChange={(event) => onDayChange(event.target.value)}
+                        min="2019-01-01"
+                        max="2019-01-31"
+                    />
                 </div>
                 <div className="sort-bar">
                     <select className="filter-by-tool" name="zone-sort">
@@ -54,8 +63,21 @@ export function ToolBar() {
             </div>
 
             <div className="filter-btns">
-                <button className="apply-filters-btn primary-button">Apply</button>
-                <button className="reset-filters-btn secondary-button">Reset</button>
+                <button 
+                    className="apply-filters-btn primary-button"
+                    onClick={onApply}
+                    disabled={loading}
+                >
+                    {loading ? 'Loading ...' : 'Apply'}
+                </button>
+
+                <button 
+                    className="reset-filters-btn secondary-button"
+                    onClick={onReset}
+                    disabled={loading}
+                >
+                    Reset
+                </button>
             </div>
         </div>
     )

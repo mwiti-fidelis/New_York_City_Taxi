@@ -10,6 +10,17 @@ const db = new Database(
 
 );
 
+db.exec(`
+    CREATE INDEX IF NOT EXISTS idx_trips_pickup_datetime
+    ON trips (tpep_pickup_datetime);
+    
+    CREATE INDEX IF NOT EXISTS idx_trips_pickup_location
+    ON trips (PULocationID);
+    
+    CREATE INDEX IF NOT EXISTS idx_trips_dropoff_location
+    ON trips (DOLocationID);
+`)
+
 const result = db.prepare('SELECT COUNT(*) AS total FROM trips').get()
 console.log(result)
 
@@ -68,15 +79,13 @@ app.get('/api/dashboard', (req, res) => {
         
         const distanceFare = db.prepare(`
             SELECT
-                CAST((ROUND(trip_distance / 10.0, 0) * 10) AS INTEGER) AS distance,
-                ROUND(AVG(fare_amount), 2) AS fare
+                trip_distance AS distance,
+                fare_amount AS fare
             FROM trips
             WHERE tpep_pickup_datetime >= ? AND tpep_pickup_datetime <= ?
                 AND trip_distance > 0.5
                 AND fare_amount > 2.5
-            GROUP BY CAST((ROUND(trip_distance / 10.0, 0) * 10) AS INTEGER)
-            ORDER BY distance
-            LIMIT 20
+            LIMIT 2000
         `).all(startOfDay,  endOfDay)
         
         return res.json({
@@ -116,14 +125,12 @@ app.get('/api/dashboard', (req, res) => {
 
     const distanceFare = db.prepare(`
         SELECT
-            CAST((ROUND(trip_distance / 10.0, 0) * 10) AS INTEGER) AS distance,
-            ROUND(AVG(fare_amount), 2) AS fare
+            trip_distance AS distance,
+            fare_amount AS fare
         FROM trips
         WHERE trip_distance > 0.5
             AND fare_amount > 2.5
-        GROUP BY CAST((ROUND(trip_distance / 10.0, 0) * 10) AS INTEGER)
-        ORDER BY distance
-        LIMIT 20
+        LIMIT 2000
     `).all()
 
 

@@ -1,6 +1,6 @@
 import './TripDetails.css';
 
-export function TripDetails() {
+export function TripDetails( {trips = [] }) {
     return (
         <>
             <div className="trip-details-container">
@@ -19,22 +19,16 @@ export function TripDetails() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2019-01-15 08:42</td>
-                                    <td>3.1 mi</td>
-                                    <td>Midtown Center</td>
-                                    <td>JFK Airport</td>
-                                    <td>$14.20</td>
-                                    <td>$2.80</td>
+                                {trips.map((trip, index) => (
+                                <tr key={`${trip.pickupTime}-${index}`}>
+                                    <td>{trip.pickupTime}</td>
+                                    <td>{Number(trip.distance).toFixed(2)} mi</td>
+                                    <td>{trip.pickupZone || 'Unknown'}</td>
+                                    <td>{trip.dropoffZone || 'Unknown'}</td>
+                                    <td>${Number(trip.fare).toFixed(2)}</td>
+                                    <td>${Number(trip.tip).toFixed(2)}</td>
                                 </tr>
-                                <tr>
-                                    <td>2019-01-15 09:10</td>
-                                    <td>1.8 mi</td>
-                                    <td>Upper East Side</td>
-                                    <td>Midtown</td>
-                                    <td>$9.50</td>
-                                    <td>$1.50</td>
-                                </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
